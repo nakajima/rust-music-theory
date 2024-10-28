@@ -44,7 +44,6 @@
 
 #[macro_use]
 extern crate alloc;
-extern crate strum;
 pub mod chord;
 pub mod interval;
 pub mod note;

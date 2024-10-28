@@ -1,4 +1,5 @@
 use alloc::vec::Vec;
+use libm::{self, Libm};
 
 use crate::note::Pitch;
 use crate::note::Tuning;
@@ -29,7 +30,8 @@ impl Note {
         match tuning {
             Tuning::EqualTemperament => {
                 let a440 = Note::new(Pitch::from_str("A").unwrap(), 4).to_note_nr();
-                Note::from_note_nr(((12.0 * (freq / 440.0).log2()) as i16 + a440 as i16) as u8)
+                let log2 = libm::log2f(freq / 440.0);
+                Note::from_note_nr(((12.0 * log2) as i16 + a440 as i16) as u8)
             }
         }
     }
@@ -42,7 +44,11 @@ impl Note {
         match tuning {
             Tuning::EqualTemperament => {
                 let a440 = Note::new(Pitch::from_str("A").unwrap(), 4).to_note_nr();
-                2f32.powf(((self.to_note_nr() as i16 - a440 as i16) as f32) / 12.0) * 440.0
+                let powf = libm::powf(
+                    2.0,
+                    ((self.to_note_nr() as i16 - a440 as i16) as f32) / 12.0,
+                );
+                powf * 440.0
             }
         }
     }
