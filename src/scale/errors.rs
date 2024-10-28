@@ -9,13 +9,13 @@ pub enum ScaleError {
 }
 
 impl From<regex::Error> for ScaleError {
-    fn from(e: regex::Error) -> Self {
+    fn from(_: regex::Error) -> Self {
         ScaleError::ModeFromRegex
     }
 }
 
 impl From<NoteError> for ScaleError {
-    fn from(e: NoteError) -> Self {
+    fn from(_: NoteError) -> Self {
         ScaleError::InvalidRegex
     }
 }
