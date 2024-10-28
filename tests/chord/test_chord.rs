@@ -36,7 +36,8 @@ mod chord_tests {
             for inversion in 0..pitches.len() {
                 assert_notes(
                     &symbols,
-                    Chord::with_inversion(Pitch::from(chord.0), chord.1, chord.2, inversion as u8).notes(),
+                    Chord::with_inversion(Pitch::from(chord.0), chord.1, chord.2, inversion as u8)
+                        .notes(),
                 );
                 symbols.rotate_left(1);
             }
@@ -54,9 +55,13 @@ mod chord_tests {
             [4, 5, 5, 6, 6],
         ];
         for inversion in 0..octaves[0].len() {
-            let notes =
-                Chord::with_inversion(Pitch::from(chord_desc.0), chord_desc.1, chord_desc.2, inversion as u8)
-                    .notes();
+            let notes = Chord::with_inversion(
+                Pitch::from(chord_desc.0),
+                chord_desc.1,
+                chord_desc.2,
+                inversion as u8,
+            )
+            .notes();
             assert_eq!(
                 notes
                     .into_iter()
@@ -88,32 +93,5 @@ mod chord_tests {
         assert_notes(&vec![C, F, A], chord_num.notes());
         assert_eq!(chord.inversion, 2);
         assert_eq!(chord_num.inversion, 2);
-    }
-
-    #[test]
-    fn test_chord_from_string() {
-        let c = Pitch::from_str("C").unwrap();
-        let chord_tuples = [
-            ((c, Major, Triad), "C E G"),
-            ((c, Minor, Triad), "C Ds G"),
-            ((c, Augmented, Triad), "C E Gs"),
-            ((c, Diminished, Triad), "C Ds Fs"),
-            ((c, Suspended2, Triad), "C D G"),
-            ((c, Suspended4, Triad), "C F G"),
-            ((c, Major, Seventh), "C E G B"),
-            ((c, Minor, Seventh), "C Ds G As"),
-            ((c, Augmented, Seventh), "C E Gs As"),
-            ((c, Augmented, MajorSeventh), "C, E, Gs, B"),
-            ((c, Diminished, Seventh), "C, Ds, Fs, A"),
-            ((c, HalfDiminished, Seventh), "C, Ds, Fs, As"),
-            ((c, Minor, MajorSeventh), "C, Ds, G, B"),
-            ((c, Dominant, Seventh), "C, E, G, As"),
-        ];
-
-        for chord_pair in chord_tuples.iter() {
-            let chord = Chord::from_string(chord_pair.1);
-            let (root, quality, number) = (chord.root, chord.quality, chord.number);
-            assert_eq!((root, quality, number), (chord_pair.0));
-        }
     }
 }

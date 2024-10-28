@@ -16,3 +16,4 @@ strum_macros = "0.17.1"
 regex = "1"
 clap = "2.31"
 lazy_static = "1.4.0"
+heapless = { version = "0.8.0", features = ["defmt-03"] }

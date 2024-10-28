@@ -1,12 +1,13 @@
+use alloc::vec::Vec;
+
 use crate::interval::Interval;
 use crate::note::{Note, NoteLetter, Notes, Pitch};
 use crate::scale::errors::ScaleError;
 use crate::scale::Mode::{Aeolian, Dorian, Ionian, Locrian, Lydian, Mixolydian, Phrygian};
 use crate::scale::{Mode, ScaleType};
-use strum_macros::Display;
 
 /// The direction of the scale; up or down.
-#[derive(Display, Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
     Ascending,
     Descending,
@@ -117,7 +118,10 @@ impl Notes for Scale {
 impl Default for Scale {
     fn default() -> Self {
         Scale {
-            tonic: Pitch { letter: NoteLetter::C, accidental: 0 },
+            tonic: Pitch {
+                letter: NoteLetter::C,
+                accidental: 0,
+            },
             octave: 0,
             scale_type: ScaleType::Diatonic,
             mode: Some(Ionian),

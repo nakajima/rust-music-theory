@@ -2,7 +2,7 @@ use crate::scale::{Mode, Mode::*};
 use strum_macros::{Display, EnumIter};
 
 /// The type of a scale.
-#[derive(Display, Debug, Clone, Copy, EnumIter, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ScaleType {
     Diatonic,
     MelodicMinor,

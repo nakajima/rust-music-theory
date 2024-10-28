@@ -1,3 +1,5 @@
+#![no_std]
+
 //! `Rust Music Theory` is a library that provides programmatic implementation of the basis of music theory.
 //!
 //! ## About
@@ -40,6 +42,8 @@
 //! // returns a Vector of the Notes of the chord
 //! let chord_notes = chord.notes();
 
+#[macro_use]
+extern crate alloc;
 extern crate strum;
 pub mod chord;
 pub mod interval;

@@ -1,6 +1,7 @@
 use crate::scale::errors::ScaleError;
 use crate::scale::errors::ScaleError::ModeFromRegex;
 use crate::scale::mode::Mode::*;
+use alloc::vec::Vec;
 use lazy_static::lazy_static;
 use regex::{Match, Regex};
 use strum_macros::{Display, EnumIter};
@@ -32,7 +33,7 @@ lazy_static! {
 }
 
 /// The mode of a scale.
-#[derive(Display, Debug, Clone, Copy, EnumIter, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Mode {
     /// Also known as a major scale.
     Ionian,

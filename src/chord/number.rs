@@ -1,4 +1,5 @@
 use crate::chord::errors::ChordError;
+use alloc::vec::Vec;
 use lazy_static::lazy_static;
 use regex::{Match, Regex};
 use strum_macros::Display;
@@ -18,7 +19,7 @@ lazy_static! {
 }
 
 /// The superscript number after a chord.
-#[derive(Display, Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Number {
     Triad,
     Seventh,

@@ -1,8 +1,12 @@
+use alloc::vec::Vec;
+
 use crate::chord::errors::ChordError;
 use crate::chord::number::Number::Triad;
 use crate::chord::{Number, Quality};
 use crate::interval::Interval;
-use crate::note::{Note, NoteError, Notes, Pitch, NoteLetter};
+use crate::note::{Note, NoteError, NoteLetter, Notes, Pitch};
+
+const INTERVALS_CAPACITY: usize = 8;
 
 /// A chord.
 #[derive(Debug, Clone)]
@@ -28,12 +32,7 @@ impl Chord {
     }
 
     /// Create a new chord with a given inversion.
-    pub fn with_inversion(
-        root: Pitch,
-        quality: Quality,
-        number: Number,
-        inversion: u8,
-    ) -> Self {
+    pub fn with_inversion(root: Pitch, quality: Quality, number: Number, inversion: u8) -> Self {
         let intervals = Self::chord_intervals(quality, number);
         let inversion = inversion % (intervals.len() + 1) as u8;
         Chord {
@@ -44,23 +43,6 @@ impl Chord {
             number,
             inversion,
         }
-    }
-
-    pub fn from_string(string: &str) -> Self {
-        let notes: Vec<Pitch> = string.to_string()
-                    .replace(",", "")
-                    .split_whitespace()
-                    .into_iter()
-                    .map(|x| Pitch::from_str(x).expect(&format!("Invalid note {:?}.", x)))
-                    .collect();
-
-        let intervals: Vec<u8> = notes.iter()
-                    .map(|&x| Pitch::into_u8(x) % 12)
-                    .zip(notes[1..].iter().map(|&x| Pitch::into_u8(x)))
-                    .map(|(x, y)| if x < y {y - x} else {y + 12 - x})
-                    .collect();
-
-        Chord::from_interval(notes[0], &intervals)
     }
 
     pub fn from_interval(root: Pitch, interval: &[u8]) -> Self {
@@ -89,7 +71,7 @@ impl Chord {
             &[4, 3, 3, 4, 3, 4] => (Dominant, Thirteenth),
             &[4, 3, 4, 3, 3, 4] => (Major, Thirteenth),
             &[3, 4, 3, 4, 3, 4] => (Minor, Thirteenth),
-            _ => panic!("Couldn't create chord! {:?}", interval)
+            _ => panic!("Couldn't create chord! {:?}", interval),
         };
         Self::new(root, quality, number)
     }
@@ -153,12 +135,8 @@ impl Chord {
             Triad
         };
 
-        let chord = Chord::with_inversion(
-            pitch,
-            quality,
-            number,
-            inversion_num_option.unwrap_or(0),
-        );
+        let chord =
+            Chord::with_inversion(pitch, quality, number, inversion_num_option.unwrap_or(0));
 
         if let Ok((bass_note, _)) = bass_note_result {
             let inversion = chord
@@ -211,7 +189,10 @@ impl Notes for Chord {
 impl Default for Chord {
     fn default() -> Self {
         Chord {
-            root: Pitch { letter: NoteLetter::C, accidental: 0 },
+            root: Pitch {
+                letter: NoteLetter::C,
+                accidental: 0,
+            },
             octave: 4,
             intervals: vec![],
             quality: Quality::Major,

@@ -1,7 +1,6 @@
 use crate::interval::errors::IntervalError;
 use crate::note::{Note, Pitch};
-use std::fmt;
-use std::fmt::Display;
+use alloc::vec::Vec;
 use strum_macros::Display;
 
 /// The quality of an interval; major, minor, etc.
@@ -13,19 +12,6 @@ pub enum Quality {
     Minor,
     Augmented,
     Diminished,
-}
-
-impl Display for Quality {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let string = match self {
-            Quality::Perfect => "P",
-            Quality::Major => "M",
-            Quality::Minor => "m",
-            Quality::Augmented => "A",
-            Quality::Diminished => "d",
-        };
-        write!(f, "{}", string)
-    }
 }
 
 /// The number of an interval.
@@ -41,24 +27,8 @@ pub enum Number {
     Octave,
 }
 
-impl Display for Number {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let string = match self {
-            Number::Unison => "1",
-            Number::Second => "2",
-            Number::Third => "3",
-            Number::Fourth => "4",
-            Number::Fifth => "5",
-            Number::Sixth => "6",
-            Number::Seventh => "7",
-            Number::Octave => "8",
-        };
-        write!(f, "{}", string)
-    }
-}
-
 /// A step between notes.
-#[derive(Display, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Step {
     /// A semitone step.
     Half,
@@ -270,38 +240,6 @@ impl Default for Interval {
             quality: Quality::Major,
             number: Number::Unison,
             step: None,
-        }
-    }
-}
-
-impl Display for Interval {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Interval {
-                semitone_count: _,
-                quality: Quality::Diminished,
-                number: Number::Fifth,
-                step: _,
-            } => write!(f, "T"),
-            Interval {
-                semitone_count: _,
-                quality: Quality::Augmented,
-                number: Number::Fourth,
-                step: _,
-            } => write!(f, "T"),
-            Interval {
-                semitone_count: _,
-                quality: _,
-                number: Number::Unison,
-                step: _,
-            } => write!(f, "1"),
-            Interval {
-                semitone_count: _,
-                quality: _,
-                number: Number::Octave,
-                step: _,
-            } => write!(f, "1"),
-            _ => write!(f, "{}{}", self.quality, self.number),
         }
     }
 }
