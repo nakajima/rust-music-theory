@@ -8,16 +8,12 @@ pub enum ChordError {
 
 impl From<NoteError> for ChordError {
     fn from(e: NoteError) -> Self {
-        match e {
-            _ => ChordError::InvalidRegex,
-        }
+        ChordError::InvalidRegex
     }
 }
 
 impl From<regex::Error> for ChordError {
     fn from(e: regex::Error) -> Self {
-        match e {
-            _ => ChordError::InvalidRegex,
-        }
+        ChordError::InvalidRegex
     }
 }

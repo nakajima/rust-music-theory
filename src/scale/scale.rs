@@ -73,7 +73,7 @@ impl Scale {
 
     /// Parse a scale from a regex.
     pub fn from_regex_in_direction(string: &str, direction: Direction) -> Result<Self, ScaleError> {
-        let (tonic, tonic_match) = Pitch::from_regex(&string.trim())?;
+        let (tonic, tonic_match) = Pitch::from_regex(string.trim())?;
         let mode_string = &string[tonic_match.end()..].trim();
         let (mode, _) = Mode::from_regex(mode_string)?;
         let scale_type = ScaleType::from_mode(mode);
@@ -100,7 +100,7 @@ impl Scale {
 impl Notes for Scale {
     fn notes(&self) -> Vec<Note> {
         use Direction::*;
-        use Mode::*;
+        
         let root_note = Note {
             octave: self.octave,
             pitch: self.tonic,

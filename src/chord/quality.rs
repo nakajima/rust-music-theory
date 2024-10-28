@@ -2,7 +2,6 @@ use crate::chord::errors::ChordError;
 use alloc::vec::Vec;
 use lazy_static::lazy_static;
 use regex::{Match, Regex};
-use strum_macros::Display;
 
 lazy_static! {
     static ref QUALITY_REGEXES: Vec<(Regex, Quality)> = {

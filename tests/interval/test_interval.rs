@@ -78,7 +78,7 @@ mod test_interval {
 
     #[test]
     fn test_invert() {
-        let list = vec![12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        let list = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
         for i in 0..list.len() {
             let interval = Interval::from_semitone(list[i]).unwrap();

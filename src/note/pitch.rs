@@ -36,7 +36,7 @@ impl Pitch {
     /// looping back around once it reaches 12.
     pub fn from_u8(val: u8) -> Self {
         use NoteLetter::*;
-        return match val % 12 {
+        match val % 12 {
             0 => Pitch::new(C, 0),
             1 => Pitch::new(C, 1),
             2 => Pitch::new(D, 0),
@@ -50,7 +50,7 @@ impl Pitch {
             10 => Pitch::new(A, 1),
             11 => Pitch::new(B, 0),
             _ => panic!("impossible"),
-        };
+        }
     }
 
     /// Convert the pitch into its corresponding integer, where 0 is C and 11 is B.
@@ -101,20 +101,18 @@ impl Pitch {
                     return None;
                 }
                 accidental += map.get(&ch).unwrap();
+            } else if sharps.contains_key(&ch) {
+                active_map = Some(&sharps);
+                accidental += sharps.get(&ch).unwrap();
+            } else if flats.contains_key(&ch) {
+                active_map = Some(&flats);
+                accidental += flats.get(&ch).unwrap();
             } else {
-                if sharps.contains_key(&ch) {
-                    active_map = Some(&sharps);
-                    accidental += sharps.get(&ch).unwrap();
-                } else if flats.contains_key(&ch) {
-                    active_map = Some(&flats);
-                    accidental += flats.get(&ch).unwrap();
-                } else {
-                    return None;
-                }
+                return None;
             }
         }
 
-        return Some(Pitch { letter, accidental });
+        Some(Pitch { letter, accidental })
     }
 
     /// Create a pitch by moving up the given pitch by an interval.
@@ -135,7 +133,7 @@ impl Pitch {
 
     /// Parse the pitch using a regex, with the same algorithm as described in `from_str`.
     pub fn from_regex(string: &str) -> Result<(Self, Match), NoteError> {
-        let pitch_match = REGEX_PITCH.find(&string).ok_or(NoteError::InvalidPitch)?;
+        let pitch_match = REGEX_PITCH.find(string).ok_or(NoteError::InvalidPitch)?;
 
         let pitch = Self::from_str(&string[pitch_match.start()..pitch_match.end()])
             .ok_or(NoteError::InvalidPitch)?;

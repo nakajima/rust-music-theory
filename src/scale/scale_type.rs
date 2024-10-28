@@ -1,5 +1,4 @@
 use crate::scale::{Mode, Mode::*};
-use strum_macros::{Display, EnumIter};
 
 /// The type of a scale.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

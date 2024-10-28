@@ -48,29 +48,29 @@ impl Chord {
     pub fn from_interval(root: Pitch, interval: &[u8]) -> Self {
         use Number::*;
         use Quality::*;
-        let (quality, number) = match interval {
-            &[4, 3] => (Major, Triad),
-            &[3, 4] => (Minor, Triad),
-            &[2, 5] => (Suspended2, Triad),
-            &[5, 2] => (Suspended4, Triad),
-            &[4, 4] => (Augmented, Triad),
-            &[3, 3] => (Diminished, Triad),
-            &[4, 3, 4] => (Major, Seventh),
-            &[3, 4, 3] => (Minor, Seventh),
-            &[4, 4, 2] => (Augmented, Seventh),
-            &[4, 4, 3] => (Augmented, MajorSeventh),
-            &[3, 3, 3] => (Diminished, Seventh),
-            &[3, 3, 4] => (HalfDiminished, Seventh),
-            &[3, 4, 4] => (Minor, MajorSeventh),
-            &[4, 3, 3] => (Dominant, Seventh),
-            &[4, 3, 3, 4] => (Dominant, Ninth),
-            &[4, 3, 4, 3] => (Major, Ninth),
-            &[4, 3, 3, 4, 4] => (Dominant, Eleventh),
-            &[4, 3, 4, 3, 3] => (Major, Eleventh),
-            &[3, 4, 3, 4, 3] => (Minor, Eleventh),
-            &[4, 3, 3, 4, 3, 4] => (Dominant, Thirteenth),
-            &[4, 3, 4, 3, 3, 4] => (Major, Thirteenth),
-            &[3, 4, 3, 4, 3, 4] => (Minor, Thirteenth),
+        let (quality, number) = match *interval {
+            [4, 3] => (Major, Triad),
+            [3, 4] => (Minor, Triad),
+            [2, 5] => (Suspended2, Triad),
+            [5, 2] => (Suspended4, Triad),
+            [4, 4] => (Augmented, Triad),
+            [3, 3] => (Diminished, Triad),
+            [4, 3, 4] => (Major, Seventh),
+            [3, 4, 3] => (Minor, Seventh),
+            [4, 4, 2] => (Augmented, Seventh),
+            [4, 4, 3] => (Augmented, MajorSeventh),
+            [3, 3, 3] => (Diminished, Seventh),
+            [3, 3, 4] => (HalfDiminished, Seventh),
+            [3, 4, 4] => (Minor, MajorSeventh),
+            [4, 3, 3] => (Dominant, Seventh),
+            [4, 3, 3, 4] => (Dominant, Ninth),
+            [4, 3, 4, 3] => (Major, Ninth),
+            [4, 3, 3, 4, 4] => (Dominant, Eleventh),
+            [4, 3, 4, 3, 3] => (Major, Eleventh),
+            [3, 4, 3, 4, 3] => (Minor, Eleventh),
+            [4, 3, 3, 4, 3, 4] => (Dominant, Thirteenth),
+            [4, 3, 4, 3, 3, 4] => (Major, Thirteenth),
+            [3, 4, 3, 4, 3, 4] => (Minor, Thirteenth),
             _ => panic!("Couldn't create chord! {:?}", interval),
         };
         Self::new(root, quality, number)
@@ -109,11 +109,11 @@ impl Chord {
 
     /// Parse a chord using a regex.
     pub fn from_regex(string: &str) -> Result<Self, ChordError> {
-        let (pitch, pitch_match) = Pitch::from_regex(&string)?;
+        let (pitch, pitch_match) = Pitch::from_regex(string)?;
 
         let slash_option = string.find('/');
         let bass_note_result = if let Some(slash) = slash_option {
-            Pitch::from_regex(&string[slash + 1..].trim())
+            Pitch::from_regex(string[slash + 1..].trim())
         } else {
             Err(NoteError::InvalidPitch)
         };
@@ -124,7 +124,7 @@ impl Chord {
         };
 
         let (quality, quality_match_option) = Quality::from_regex(
-            &string[pitch_match.end()..slash_option.unwrap_or_else(|| string.len())].trim(),
+            string[pitch_match.end()..slash_option.unwrap_or(string.len())].trim(),
         )?;
 
         let number = if let Some(quality_match) = quality_match_option {

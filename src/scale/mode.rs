@@ -4,7 +4,6 @@ use crate::scale::mode::Mode::*;
 use alloc::vec::Vec;
 use lazy_static::lazy_static;
 use regex::{Match, Regex};
-use strum_macros::{Display, EnumIter};
 
 lazy_static! {
     static ref MODE_REGEXES: Vec<(Regex, Mode)> = vec![

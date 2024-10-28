@@ -35,7 +35,7 @@ mod chord_tests {
             let symbols = &mut pitches.clone();
             for inversion in 0..pitches.len() {
                 assert_notes(
-                    &symbols,
+                    symbols,
                     Chord::with_inversion(Pitch::from(chord.0), chord.1, chord.2, inversion as u8)
                         .notes(),
                 );
@@ -77,7 +77,7 @@ mod chord_tests {
         let chord = Chord::from_regex("F major");
         assert!(chord.is_ok());
         let chord = chord.unwrap();
-        assert_notes(&vec![F, A, C], chord.notes());
+        assert_notes(&[F, A, C], chord.notes());
         assert_eq!(chord.inversion, 0);
     }
 
@@ -89,8 +89,8 @@ mod chord_tests {
         assert!(chord_num.is_ok());
         let chord = chord.unwrap();
         let chord_num = chord_num.unwrap();
-        assert_notes(&vec![C, F, A], chord.notes());
-        assert_notes(&vec![C, F, A], chord_num.notes());
+        assert_notes(&[C, F, A], chord.notes());
+        assert_notes(&[C, F, A], chord_num.notes());
         assert_eq!(chord.inversion, 2);
         assert_eq!(chord_num.inversion, 2);
     }

@@ -1,7 +1,6 @@
 use crate::interval::errors::IntervalError;
 use crate::note::{Note, Pitch};
 use alloc::vec::Vec;
-use strum_macros::Display;
 
 /// The quality of an interval; major, minor, etc.
 #[derive(Debug, Copy, Clone, PartialEq)]

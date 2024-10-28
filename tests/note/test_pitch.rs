@@ -7,7 +7,7 @@ mod test_note {
 
     #[test]
     fn test_pitch_from_str_err() {
-        for string in vec!["Ca", "Q", "Cb#", "B♯b#"] {
+        for string in ["Ca", "Q", "Cb#", "B♯b#"] {
             assert!(Pitch::from_str(string).is_none());
         }
     }

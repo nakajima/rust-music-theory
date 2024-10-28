@@ -10,24 +10,18 @@ pub enum ScaleError {
 
 impl From<regex::Error> for ScaleError {
     fn from(e: regex::Error) -> Self {
-        match e {
-            _ => ScaleError::ModeFromRegex,
-        }
+        ScaleError::ModeFromRegex
     }
 }
 
 impl From<NoteError> for ScaleError {
     fn from(e: NoteError) -> Self {
-        match e {
-            _ => ScaleError::InvalidRegex,
-        }
+        ScaleError::InvalidRegex
     }
 }
 
 impl From<IntervalError> for ScaleError {
     fn from(e: IntervalError) -> Self {
-        match e {
-            _ => ScaleError::InvalidInterval,
-        }
+        ScaleError::InvalidInterval
     }
 }
