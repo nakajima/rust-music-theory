@@ -1,10 +1,8 @@
 use alloc::vec::Vec;
 
-use crate::chord::errors::ChordError;
-use crate::chord::number::Number::Triad;
 use crate::chord::{Number, Quality};
 use crate::interval::Interval;
-use crate::note::{Note, NoteError, NoteLetter, Notes, Pitch};
+use crate::note::{Note, NoteLetter, Notes, Pitch};
 
 /// A chord.
 #[derive(Debug, Clone)]
@@ -103,57 +101,6 @@ impl Chord {
             _ => Interval::from_semitones(&[4, 3]),
         }
         .unwrap()
-    }
-
-    /// Parse a chord using a regex.
-    pub fn from_regex(string: &str) -> Result<Self, ChordError> {
-        let (pitch, pitch_match) = Pitch::from_regex(string)?;
-
-        let slash_option = string.find('/');
-        let bass_note_result = if let Some(slash) = slash_option {
-            Pitch::from_regex(string[slash + 1..].trim())
-        } else {
-            Err(NoteError::InvalidPitch)
-        };
-        let inversion_num_option = if let Some(slash) = slash_option {
-            string[slash + 1..].trim().parse::<u8>().ok()
-        } else {
-            None
-        };
-
-        let (quality, quality_match_option) = Quality::from_regex(
-            string[pitch_match.end()..slash_option.unwrap_or(string.len())].trim(),
-        )?;
-
-        let number = if let Some(quality_match) = quality_match_option {
-            Number::from_regex(&string[quality_match.end()..])
-                .unwrap_or((Triad, None))
-                .0
-        } else {
-            Triad
-        };
-
-        let chord =
-            Chord::with_inversion(pitch, quality, number, inversion_num_option.unwrap_or(0));
-
-        if let Ok((bass_note, _)) = bass_note_result {
-            let inversion = chord
-                .notes()
-                .iter()
-                .position(|note| note.pitch == bass_note)
-                .unwrap_or(0);
-
-            if inversion != 0 {
-                return Ok(Chord::with_inversion(
-                    pitch,
-                    quality,
-                    number,
-                    inversion as u8,
-                ));
-            }
-        }
-
-        Ok(chord)
     }
 }
 

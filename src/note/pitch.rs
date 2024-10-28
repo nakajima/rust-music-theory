@@ -1,12 +1,5 @@
 use crate::interval::Interval;
-use crate::note::errors::NoteError;
 use heapless::FnvIndexMap;
-use lazy_static::lazy_static;
-use regex::{Match, Regex};
-
-lazy_static! {
-    static ref REGEX_PITCH: Regex = Regex::new("^[ABCDEFGabcdefg][b♭♯#s𝄪x]*").unwrap();
-}
 
 /// A note letter without an accidental.
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -129,15 +122,5 @@ impl Pitch {
         let new_pitch = (12 + (current_pitch as i16 - interval.semitone_count as i16)) % 12;
 
         Self::from_u8(new_pitch as u8)
-    }
-
-    /// Parse the pitch using a regex, with the same algorithm as described in `from_str`.
-    pub fn from_regex(string: &str) -> Result<(Self, Match), NoteError> {
-        let pitch_match = REGEX_PITCH.find(string).ok_or(NoteError::InvalidPitch)?;
-
-        let pitch = Self::from_str(&string[pitch_match.start()..pitch_match.end()])
-            .ok_or(NoteError::InvalidPitch)?;
-
-        Ok((pitch, pitch_match))
     }
 }

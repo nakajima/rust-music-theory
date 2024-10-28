@@ -8,12 +8,6 @@ pub enum ScaleError {
     InvalidRegex,
 }
 
-impl From<regex::Error> for ScaleError {
-    fn from(_: regex::Error) -> Self {
-        ScaleError::ModeFromRegex
-    }
-}
-
 impl From<NoteError> for ScaleError {
     fn from(_: NoteError) -> Self {
         ScaleError::InvalidRegex

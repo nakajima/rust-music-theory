@@ -71,27 +71,4 @@ mod chord_tests {
             );
         }
     }
-
-    #[test]
-    fn test_regex() {
-        let chord = Chord::from_regex("F major");
-        assert!(chord.is_ok());
-        let chord = chord.unwrap();
-        assert_notes(&[F, A, C], chord.notes());
-        assert_eq!(chord.inversion, 0);
-    }
-
-    #[test]
-    fn test_inversion_regex() {
-        let chord = Chord::from_regex("F/C");
-        let chord_num = Chord::from_regex("F/2");
-        assert!(chord.is_ok());
-        assert!(chord_num.is_ok());
-        let chord = chord.unwrap();
-        let chord_num = chord_num.unwrap();
-        assert_notes(&[C, F, A], chord.notes());
-        assert_notes(&[C, F, A], chord_num.notes());
-        assert_eq!(chord.inversion, 2);
-        assert_eq!(chord_num.inversion, 2);
-    }
 }

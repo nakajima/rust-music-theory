@@ -11,9 +11,3 @@ impl From<NoteError> for ChordError {
         ChordError::InvalidRegex
     }
 }
-
-impl From<regex::Error> for ChordError {
-    fn from(_: regex::Error) -> Self {
-        ChordError::InvalidRegex
-    }
-}
