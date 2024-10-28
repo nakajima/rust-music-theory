@@ -7,7 +7,7 @@ pub enum ChordError {
 }
 
 impl From<NoteError> for ChordError {
-    fn from(e: NoteError) -> Self {
+    fn from(_: NoteError) -> Self {
         ChordError::InvalidRegex
     }
 }

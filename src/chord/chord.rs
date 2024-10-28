@@ -6,8 +6,6 @@ use crate::chord::{Number, Quality};
 use crate::interval::Interval;
 use crate::note::{Note, NoteError, NoteLetter, Notes, Pitch};
 
-const INTERVALS_CAPACITY: usize = 8;
-
 /// A chord.
 #[derive(Debug, Clone)]
 pub struct Chord {

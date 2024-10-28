@@ -5,7 +5,7 @@ pub enum NoteError {
 }
 
 impl From<regex::Error> for NoteError {
-    fn from(e: regex::Error) -> Self {
+    fn from(_: regex::Error) -> Self {
         NoteError::InvalidPitch
     }
 }

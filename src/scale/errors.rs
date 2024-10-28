@@ -21,7 +21,7 @@ impl From<NoteError> for ScaleError {
 }
 
 impl From<IntervalError> for ScaleError {
-    fn from(e: IntervalError) -> Self {
+    fn from(_: IntervalError) -> Self {
         ScaleError::InvalidInterval
     }
 }
