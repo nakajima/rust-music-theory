@@ -1,5 +1,4 @@
 use alloc::vec::Vec;
-use libm::{self, Libm};
 
 use crate::note::Pitch;
 use crate::note::Tuning;
