@@ -12,4 +12,4 @@ keywords = ["music", "music-theory"]
 
 [dependencies]
 heapless = { version = "0.8.0", features = ["defmt-03"] }
-libm = "0.2.10"
+libm = "^0.2.8"
