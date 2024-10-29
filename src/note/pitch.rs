@@ -1,8 +1,9 @@
 use crate::interval::Interval;
+use defmt::Format;
 use heapless::FnvIndexMap;
 
 /// A note letter without an accidental.
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Format)]
 pub enum NoteLetter {
     C,
     D,
@@ -13,7 +14,7 @@ pub enum NoteLetter {
     B,
 }
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Format)]
 pub struct Pitch {
     pub letter: NoteLetter,
     pub accidental: i8,

@@ -1,10 +1,11 @@
 use alloc::vec::Vec;
+use defmt::Format;
 
 use crate::note::Pitch;
 use crate::note::Tuning;
 
 /// A note.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy, PartialEq, Format)]
 pub struct Note {
     /// The pitch of the note (A, B, C#, etc).
     pub pitch: Pitch,
@@ -35,11 +36,11 @@ impl Note {
         }
     }
 
-    pub fn to_note_nr(self) -> u8 {
+    pub fn to_note_nr(&self) -> u8 {
         self.pitch.into_u8() + 12 * self.octave
     }
 
-    pub fn to_freq(self, tuning: Tuning) -> f32 {
+    pub fn to_freq(&self, tuning: Tuning) -> f32 {
         match tuning {
             Tuning::EqualTemperament => {
                 let a440 = Note::new(Pitch::from_str("A").unwrap(), 4).to_note_nr();

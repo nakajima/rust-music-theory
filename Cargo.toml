@@ -11,5 +11,6 @@ exclude = ["/.travis.yml", ".gitignore"]
 keywords = ["music", "music-theory"]
 
 [dependencies]
+defmt = "0.3.8"
 heapless = { version = "0.8.0", features = ["defmt-03"] }
 libm = "^0.2.8"
